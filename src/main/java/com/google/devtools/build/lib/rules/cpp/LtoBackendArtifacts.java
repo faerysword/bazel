@@ -97,7 +97,7 @@ public final class LtoBackendArtifacts {
       List<String> userCompileFlags)
       throws RuleErrorException {
     this.bitcodeFile = bitcodeFile;
-    PathFragment obj = ltoOutputRootPrefix.getRelative(bitcodeFile.getRootRelativePath());
+    PathFragment obj = ltoOutputRootPrefix.getRelative(bitcodeFile.getOutputRelativePath());
 
     objectFile =
         linkArtifactFactory.create(actionConstructionContext, repositoryName, configuration, obj);
