@@ -18,7 +18,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
-import com.google.devtools.build.lib.cmdline.LabelConstants;
 import com.google.devtools.build.lib.concurrent.ThreadSafety.Immutable;
 import com.google.devtools.build.lib.skyframe.serialization.autocodec.AutoCodec;
 import com.google.devtools.build.lib.starlarkbuildapi.FileRootApi;
@@ -57,12 +56,6 @@ public final class ArtifactRoot implements Comparable<ArtifactRoot>, Serializabl
    */
   public static ArtifactRoot asSourceRoot(Root root) {
     return new ArtifactRoot(root, PathFragment.EMPTY_FRAGMENT, RootType.Source);
-  }
-
-  public static ArtifactRoot asExternalSourceRoot(Root root) {
-    Preconditions.checkArgument(
-        root.asPath().asFragment().endsWith(LabelConstants.EXTERNAL_REPOSITORY_LOCATION));
-    return new ArtifactRoot(root, PathFragment.EMPTY_FRAGMENT, RootType.ExternalSource);
   }
 
   /**
@@ -123,8 +116,7 @@ public final class ArtifactRoot implements Comparable<ArtifactRoot>, Serializabl
   enum RootType {
     Source,
     Output,
-    Middleman,
-    ExternalSource
+    Middleman
   }
 
   private final Root root;
@@ -164,11 +156,7 @@ public final class ArtifactRoot implements Comparable<ArtifactRoot>, Serializabl
   }
 
   public boolean isSourceRoot() {
-    return rootType == RootType.Source || isExternalSourceRoot();
-  }
-
-  public boolean isExternalSourceRoot() {
-    return rootType == RootType.ExternalSource;
+    return rootType == RootType.Source;
   }
 
   boolean isMiddlemanRoot() {

@@ -121,7 +121,7 @@ public class StarlarkActionFactory implements StarlarkActionFactoryApi {
     if (Starlark.NONE.equals(sibling)) {
       fragment = ruleContext.getPackageDirectory().getRelative(PathFragment.create(filename));
     } else {
-      PathFragment original = ((Artifact) sibling).getOutputRelativePath();
+      PathFragment original = ((Artifact) sibling).getRootRelativePath();
       fragment = original.replaceName(filename);
     }
 
@@ -141,7 +141,7 @@ public class StarlarkActionFactory implements StarlarkActionFactoryApi {
     if (Starlark.NONE.equals(sibling)) {
       fragment = ruleContext.getPackageDirectory().getRelative(PathFragment.create(filename));
     } else {
-      PathFragment original = ((Artifact) sibling).getOutputRelativePath();
+      PathFragment original = ((Artifact) sibling).getRootRelativePath();
       fragment = original.replaceName(filename);
     }
 
@@ -174,7 +174,7 @@ public class StarlarkActionFactory implements StarlarkActionFactoryApi {
     if (Starlark.NONE.equals(sibling)) {
       rootRelativePath = ruleContext.getPackageDirectory().getRelative(filename);
     } else {
-      PathFragment original = ((Artifact) sibling).getOutputRelativePath();
+      PathFragment original = ((Artifact) sibling).getRootRelativePath();
       rootRelativePath = original.replaceName(filename);
     }
 
@@ -234,7 +234,7 @@ public class StarlarkActionFactory implements StarlarkActionFactoryApi {
     String progressMessage =
         (progressMessageUnchecked != Starlark.NONE)
             ? (String) progressMessageUnchecked
-            : "Creating symlink " + outputArtifact.getOutputRelativePath().getPathString();
+            : "Creating symlink " + outputArtifact.getRootRelativePathString();
 
     SymlinkAction action;
     if (targetFile != Starlark.NONE) {
